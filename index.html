@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/intro/">
+<title>独立小铺 — 摄影师·化妆师的作品集与档期预约微信小程序</title>
+<meta name="description" content="独立小铺是一款给独立摄影师、化妆师等个人服务者用的微信小程序：作品集排列（5 种版式）、档期预约日历、联系方式掌柜自主公开、分享海报生成。基础功能免费，微信内搜一搜「独立小铺」即可使用，无需下载 App。">
+<meta name="baidu-site-verification" content="codeva-irflJlZeFr" />
+<meta name="baidu-site-verification" content="codeva-SX8bYJkuwM" />
+<meta name="msvalidate.01" content="E82DB29CC58197048041CEEF1268A600" />
+<meta name="sogou_site_verification" content="YC4y5Bygz6" />
+<meta property="og:title" content="独立小铺 — 摄影师·化妆师的作品集与档期预约微信小程序">
+<meta property="og:description" content="把作品集、档期日历和客户预约装进一个微信小程序。客户看作品、挑日期、发预约，一气呵成。基础功能免费。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://dolee.cn/intro/https://cdn.qiongren.online/dolee/intro/assets/xingyu_albums.jpg">
+<link rel="canonical" href="https://dolee.cn/intro/">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --sub: #999;
+    --weak: #bbb;
+    --line: #f0f0f0;
+    --green: #07C160;
+    --bg-soft: #f7f8fa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: var(--ink);
+    background: #fff;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+
+  /* header */
+  header.site {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand { font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+  nav.top { display: flex; gap: 28px; }
+  nav.top a { font-size: 14px; color: #666; }
+  nav.top a:hover { color: var(--ink); }
+  @media (max-width: 640px) { nav.top { display: none; } }
+
+  /* hero */
+  .hero { padding: 88px 0 72px; border-bottom: 1px solid var(--line); }
+  .hero .kicker { font-size: 14px; color: var(--sub); letter-spacing: 4px; margin-bottom: 20px; }
+  h1 { font-size: 34px; line-height: 1.45; font-weight: 700; max-width: 640px; }
+  h1 .thin { color: var(--sub); font-weight: 400; }
+  .hero .lead { margin-top: 22px; font-size: 17px; color: #444; max-width: 620px; }
+  .hero .facts { margin-top: 26px; display: flex; gap: 44px; flex-wrap: wrap; }
+  .hero .facts .num { font-family: Georgia, "Times New Roman", serif; font-size: 30px; font-weight: 700; }
+  .hero .facts .lbl { font-size: 13px; color: var(--sub); margin-top: 2px; }
+  .hero-flex { display: flex; gap: 48px; align-items: flex-start; justify-content: space-between; }
+  .hero-main { flex: 1 1 480px; }
+  .hero-qr { flex: 0 0 220px; text-align: center; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 12px; padding: 20px 16px 16px; }
+  .hero-qr img { width: 172px; height: 172px; display: block; margin: 0 auto; }
+  .hero-qr .cap { font-size: 13px; color: var(--sub); margin-top: 10px; line-height: 1.6; }
+  .hero-shot { margin-top: 56px; text-align: center; }
+  .hero-shot .phones { display: flex; justify-content: center; align-items: flex-start; }
+  .hero-shot .phone img { border-radius: 16px; border: 1px solid var(--line); display: block; }
+  .hero-shot .phone.side-l img { width: 205px; box-shadow: 0 6px 18px rgba(0,0,0,.05); }
+  .hero-shot .phone.side-r img { width: 205px; box-shadow: 0 6px 18px rgba(0,0,0,.05); }
+  .hero-shot .phone.main img { width: 320px; box-shadow: 0 18px 50px rgba(0,0,0,.15); }
+  .hero-shot .phone.side-l { margin-top: 96px; margin-right: -18px; z-index: 1; }
+  .hero-shot .phone.side-r { margin-top: 172px; margin-left: -18px; z-index: 1; }
+  .hero-shot .phone.side-l img, .hero-shot .phone.side-r img { opacity: .96; }
+  .hero-shot .phone.main { z-index: 2; position: relative; }
+  .hero-shot .cap { font-size: 13px; color: var(--weak); margin-top: 20px; }
+  @media (max-width: 640px) {
+    .hero-shot .phone.side-l img, .hero-shot .phone.side-r img { width: 27vw; }
+    .hero-shot .phone.main img { width: 36vw; }
+    .hero-shot .phone.side-l { margin-top: 36px; margin-right: -8px; }
+    .hero-shot .phone.side-r { margin-top: 64px; margin-left: -8px; }
+  }
+  @media (max-width: 640px) { .hero-flex { flex-direction: column; } .hero-qr { width: 100%; } }
+
+  /* sections */
+  section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+  .sec-no { font-family: Georgia, serif; font-size: 15px; color: #d8d8d8; letter-spacing: 2px; }
+  h2 { font-size: 26px; font-weight: 700; margin: 8px 0 10px; }
+  .sec-lead { color: #555; max-width: 640px; }
+
+  /* pain points */
+  .pains { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+  @media (max-width: 640px) { .pains { grid-template-columns: 1fr; } }
+  .pain { background: var(--bg-soft); border-radius: 12px; padding: 24px 22px; }
+  .pain .no { font-family: Georgia, serif; font-size: 22px; color: #d8d8d8; font-weight: 700; }
+  .pain h3 { font-size: 16px; margin: 8px 0 6px; }
+  .pain p { font-size: 14px; color: var(--sub); line-height: 1.7; }
+
+  /* feature rows */
+  .feat { display: flex; gap: 48px; align-items: center; margin-top: 56px; }
+  .feat.rev { flex-direction: row-reverse; }
+  @media (max-width: 720px) { .feat, .feat.rev { flex-direction: column; } }
+  .feat .txt { flex: 1 1 440px; }
+  .feat .pic { flex: 0 0 300px; text-align: center; }
+  .feat .pic img { width: 280px; border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 8px 28px rgba(0,0,0,.06); }
+  .feat .pic .cap { font-size: 12px; color: var(--weak); margin-top: 10px; }
+  .feat h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+  .feat h3 .tag { display: inline-block; font-size: 12px; font-weight: 400; color: var(--green); border: 1px solid var(--green); border-radius: 4px; padding: 0 6px; margin-left: 10px; vertical-align: 2px; }
+  .feat p { font-size: 15px; color: #555; }
+  .feat ul { margin-top: 10px; list-style: none; }
+  .feat ul li { font-size: 14px; color: #666; padding-left: 18px; position: relative; margin-top: 6px; }
+  .feat ul li::before { content: ""; position: absolute; left: 0; top: 11px; width: 7px; height: 7px; border-radius: 50%; background: var(--green); opacity: .85; }
+
+  /* data proof */
+  .proof { margin-top: 60px; background: var(--bg-soft); border-radius: 14px; padding: 34px 32px; }
+  .proof h3 { font-size: 18px; margin-bottom: 6px; }
+  .proof .src { font-size: 12px; color: var(--weak); margin-bottom: 20px; }
+  .proof-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+  .proof .cell { flex: 1 1 120px; text-align: center; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px 8px 14px; }
+  .proof .cell .num { font-family: Georgia, serif; font-size: 28px; font-weight: 700; }
+  .proof .cell .lbl { font-size: 12px; color: var(--sub); margin-top: 4px; line-height: 1.5; }
+  .proof .sum { margin-top: 18px; font-size: 14px; color: #666; }
+
+  /* real shops (avatar cards + small QR) */
+  .shops { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+  @media (max-width: 640px) { .shops { grid-template-columns: 1fr; } }
+  .shop-card { border: 1px solid var(--line); border-radius: 14px; padding: 30px 22px 22px; text-align: center; }
+  .shop-card .sc-avatar { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); display: block; margin: 0 auto; }
+  .shop-card .sc-name { font-size: 17px; font-weight: 700; margin-top: 14px; }
+  .shop-card .sc-meta { font-size: 13px; color: var(--sub); margin-top: 4px; }
+  .shop-card .sc-line { font-size: 13px; color: #666; margin-top: 10px; line-height: 1.7; min-height: 44px; }
+  .shop-card .sc-qr { margin-top: 14px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .shop-card .sc-qr img { width: 104px; height: 104px; display: block; margin: 0 auto; }
+  .shop-card .sc-qr span { display: block; font-size: 12px; color: var(--sub); margin-top: 6px; }
+  .shops-note { margin-top: 26px; font-size: 13px; color: var(--sub); }
+
+  /* who */
+  .who-list { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .who-list span { border: 1px solid var(--line); background: var(--bg-soft); border-radius: 999px; padding: 8px 20px; font-size: 15px; color: #444; }
+
+  /* steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+  @media (max-width: 640px) { .steps { grid-template-columns: 1fr; } }
+  .step .no { font-family: Georgia, serif; font-size: 34px; color: #d8d8d8; font-weight: 700; }
+  .step h3 { font-size: 17px; margin: 6px 0; }
+  .step p { font-size: 14px; color: var(--sub); }
+  .start-note { margin-top: 30px; font-size: 14px; color: #666; background: var(--bg-soft); border-radius: 10px; padding: 16px 20px; line-height: 1.9; }
+
+  /* price */
+  .plans { display: flex; gap: 24px; margin-top: 40px; align-items: stretch; }
+  @media (max-width: 720px) { .plans { flex-direction: column; } }
+  .plan { flex: 1; border: 1px solid var(--line); border-radius: 14px; padding: 28px 26px; }
+  .plan.vip { border-color: #1a1a1a; }
+  .plan .name { font-size: 16px; font-weight: 700; }
+  .plan .price { font-family: Georgia, serif; font-size: 34px; font-weight: 700; margin: 12px 0 2px; }
+  .plan .price small { font-size: 14px; color: var(--sub); font-family: inherit; font-weight: 400; }
+  .plan ul { list-style: none; margin-top: 16px; }
+  .plan ul li { font-size: 14px; color: #555; padding: 7px 0 7px 22px; position: relative; border-top: 1px solid var(--line); }
+  .plan ul li:first-child { border-top: none; }
+  .plan ul li::before { content: "✓"; position: absolute; left: 2px; color: var(--green); font-size: 13px; }
+  .plan ul li.mute { color: var(--sub); }
+  .price-note { margin-top: 22px; font-size: 13px; color: var(--sub); line-height: 1.9; }
+
+  /* faq */
+  .faq-item { margin-top: 34px; }
+  .faq-item h3 { font-size: 17px; font-weight: 700; padding-left: 14px; position: relative; }
+  .faq-item h3::before { content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: 4px; border-radius: 2px; background: var(--green); opacity: .85; }
+  .faq-item p { margin-top: 10px; font-size: 15px; color: #555; max-width: 720px; }
+
+  /* footer */
+  footer.site { padding: 48px 0 60px; }
+  footer.site .links { text-align: center; font-size: 13px; color: var(--sub); }
+  footer.site .links a { color: var(--sub); text-decoration: underline; text-underline-offset: 3px; }
+  footer.site .links .sep { margin: 0 10px; color: var(--weak); }
+  footer.site .cp { text-align: center; font-size: 12px; color: var(--weak); margin-top: 14px; }
+  .foot-rule { width: 88px; height: 1px; background: rgba(0,0,0,.12); margin: 0 auto 22px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top">独立小铺</a>
+    <nav class="top">
+      <a href="#features">功能</a>
+      <a href="#who">给谁用</a>
+      <a href="#start">怎么开始</a>
+      <a href="#price">价格</a>
+      <a href="#faq">常见问题</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- hero -->
+  <div class="hero">
+    <div class="wrap hero-flex">
+      <div class="hero-main">
+        <div class="kicker">微信小程序 · 基础功能免费</div>
+        <h1>独立小铺<br><span class="thin">摄影师、化妆师的</span><br>作品集与档期预约小程序</h1>
+        <p class="lead">把作品集、档期日历和客户预约装进一个微信小程序：客户打开你的小铺，看作品、挑日期、发预约，一气呵成。不需要建网站，不需要下载 App，微信里就能转发给任何人。</p>
+        <div class="facts">
+          <div><div class="num">3 年</div><div class="lbl">已服务独立创作者</div></div>
+          <div><div class="num">2000+</div><div class="lbl">摄影师 / 化妆师在用</div></div>
+          <div><div class="num">¥0</div><div class="lbl">基础功能永久免费</div></div>
+        </div>
+      </div>
+      <div class="hero-qr">
+        <img src="https://cdn.qiongren.online/dolee/intro/assets/qrcode.jpg" alt="独立小铺微信小程序码，微信扫码直接进入">
+        <div class="cap">微信扫码，直接进入小程序<br>也可以在微信「搜一搜」里搜「独立小铺」</div>
+      </div>
+    </div>
+    <div class="wrap hero-shot">
+      <div class="phones">
+        <div class="phone side-l">
+          <img src="https://cdn.qiongren.online/dolee/intro/assets/shiyue_grid.jpg" alt="独立小铺真实店铺示例：拾月的作品网格，两列瀑布流展示主题写真作品">
+        </div>
+        <div class="phone main">
+          <img src="https://cdn.qiongren.online/dolee/intro/assets/xingyu_albums.jpg" alt="独立小铺真实店铺示例：摄影师星隅的小铺主页，作品按专辑组织成画册，作品卡片带价格">
+        </div>
+        <div class="phone side-r">
+          <img src="https://cdn.qiongren.online/dolee/intro/assets/work_detail.jpg" alt="独立小铺作品详情页示例：现有汉服·唐风作品，大图展示，底部收藏与预约按钮">
+        </div>
+      </div>
+      <div class="cap">左→右：拾月的作品网格（62 组在架）· 星隅的小铺主页 · 「现有汉服·唐风」作品详情——都是客户打开就能看到的真实页面</div>
+    </div>
+  </div>
+
+  <!-- what / pain -->
+  <section id="what">
+    <div class="wrap">
+      <div class="sec-no">01</div>
+      <h2>独立小铺是什么</h2>
+      <p class="sec-lead">独立小铺是一款面向独立摄影师、化妆师等个人服务者的微信小程序工具。它解决三个每天都会遇到的问题：</p>
+      <div class="pains">
+        <div class="pain">
+          <div class="no">1</div>
+          <h3>作品散落在相册和聊天记录里</h3>
+          <p>客户要看案例，只能一张张翻手机、一张张发。作品没有排列、没有分类，发出去的图还常被压糊。</p>
+        </div>
+        <div class="pain">
+          <div class="no">2</div>
+          <h3>档期全靠聊天记忆</h3>
+          <p>「周六有空吗」「那天约过了吗」——约没约全靠回忆，撞档、记错、口头确认没凭据，时有发生。</p>
+        </div>
+        <div class="pain">
+          <div class="no">3</div>
+          <h3>客户约不上、说不清</h3>
+          <p>客户不知道你哪天有空，你也不知道客户想要什么档位，来回拉扯好几天，单子就凉了。</p>
+        </div>
+      </div>
+      <p class="sec-lead" style="margin-top:32px;">在独立小铺里，这三件事合成了一条线：作品集让客户一眼看到你的水平，档期日历让客户自己挑可约的日期，预约发出后你们再在微信里沟通细节。作品即门面，档期即货架，微信即沟通。</p>
+    </div>
+  </section>
+
+  <!-- features -->
+  <section id="features">
+    <div class="wrap">
+      <div class="sec-no">02</div>
+      <h2>核心功能</h2>
+      <p class="sec-lead">四个功能，覆盖从「给客户看什么」到「客户怎么约你」的全过程。</p>
+
+      <div class="feat">
+        <div class="txt">
+          <h3>作品集排列<span class="tag">5 种版式</span></h3>
+          <p>上传作品成组管理，主页提供 5 种排列版式：大图一排一、一排二、一排三、瀑布流、大图+瀑布，随时切换。支持自定义分类标签和作品专辑，客户按类别浏览；每组作品可以绑定价格档位，卡片直接带价格角标。</p>
+          <ul>
+            <li>作品分组 + 多标签 + 专辑（免费版可建 3 个专辑）</li>
+            <li>拖拽排序，主页排列 5 种版式一键切换</li>
+            <li>可绑定价格档位，作品卡片带价格角标</li>
+          </ul>
+        </div>
+        <div class="pic">
+          <img src="https://cdn.qiongren.online/dolee/intro/assets/xingyu_home.jpg" alt="独立小铺作品集页截图：分类标签「全部15 / 价格说明 / 汉服主题」，作品卡片带价格与收藏按钮">
+          <div class="cap">真实小铺的作品集：按「价格说明 / 汉服主题」分类浏览，置顶卡就是掌柜的价目说明</div>
+        </div>
+      </div>
+
+      <div class="feat rev">
+        <div class="txt">
+          <h3>档期预约日历</h3>
+          <p>你自己定义服务项目和可约时段，客户在你的主页打开月历，哪天可约、哪天约满、哪天休息一目了然（绿色可约 / 红色约满 / 灰色休息）。客户选日期、选服务、填信息提交预约，你确认后自动进双方日程，微信订阅消息全程提醒，不用再靠记忆管理档期。</p>
+          <ul>
+            <li>月历四态：可约 / 约满 / 休息 / 已过期，自动带节假日与农历</li>
+            <li>客户自助提交预约，掌柜确认后进双方日程</li>
+            <li>微信订阅消息提醒：新预约、客户改期、明日行程</li>
+          </ul>
+        </div>
+        <div class="pic">
+          <img src="https://cdn.qiongren.online/dolee/intro/assets/xingyu_calendar.jpg" alt="独立小铺档期月历截图：日期格带状态圆点，绿=可约、红=已满、灰=休息，下方列出当天可约服务与每天可接单量">
+          <div class="cap">档期月历：绿=可约，红=已满，灰=休息；下方是当天可约的服务和每天可接单量</div>
+        </div>
+      </div>
+
+      <div class="feat">
+        <div class="txt">
+          <h3>联系方式，你说了算</h3>
+          <p>微信号默认不公开。客户想联系你，需要在小程序里发起申请；你点头，联系方式才向他公开；你拒绝，对方不会收到任何提示。既不怕主页挂联系方式被骚扰，也不怕漏掉真客户。</p>
+          <ul>
+            <li>默认隐藏，客户主动申请</li>
+            <li>同意后定向公开，一键复制</li>
+            <li>拒绝则静默，不打扰不留痕</li>
+          </ul>
+        </div>
+        <div class="pic">
+          <img src="https://cdn.qiongren.online/dolee/intro/assets/contact.jpg" alt="独立小铺联系方式公开确认页截图：客户申请后掌柜同意，页面提示掌柜已同意向你公开，点击上方可复制">
+          <div class="cap">客户视角：掌柜同意后，联系方式才出现，点击即可复制</div>
+        </div>
+      </div>
+
+      <div class="feat rev">
+        <div class="txt">
+          <h3>分享海报生成</h3>
+          <p>店里的数据可以直接生成成品海报：作品海报、档期月历海报、个人名片海报，发朋友圈、发群就是一张现成的获客物料，不用再求设计师。</p>
+          <ul>
+            <li>三种海报模板：作品 / 档期月历 / 个人名片</li>
+            <li>自动带店铺名、职业、城市与扫码入口</li>
+          </ul>
+        </div>
+        <div class="pic">
+          <img src="https://cdn.qiongren.online/dolee/intro/assets/poster.png" alt="独立小铺生成的工作室海报成品示例：丽江客片大图排版，底部带工作室名称与「作品与档期均可线上预约」">
+          <div class="cap">生成器吐出的成品海报：图是你的图，字是排好的版</div>
+        </div>
+      </div>
+
+      <div class="proof">
+        <h3>作品越多，来访的客户越多</h3>
+        <div class="src">平台内统计（2026 年 10 月，按店铺作品组数分组，取各组店铺的访客中位数）</div>
+        <div class="proof-grid">
+          <div class="cell"><div class="num">1</div><div class="lbl">1–9 组作品<br>的店铺</div></div>
+          <div class="cell"><div class="num">14</div><div class="lbl">10–19 组作品<br>的店铺</div></div>
+          <div class="cell"><div class="num">96</div><div class="lbl">20–49 组作品<br>的店铺</div></div>
+          <div class="cell"><div class="num">647</div><div class="lbl">50 组以上<br>的店铺</div></div>
+        </div>
+        <p class="sum">上到 50 组作品的店铺，77% 访客数破百。作品集不是摆设，是你 24 小时在线的门面。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- real shops -->
+  <section id="shops">
+    <div class="wrap">
+      <div class="sec-no">03</div>
+      <h2>三家真实小铺，扫码直接逛</h2>
+      <p class="sec-lead">下面是在用独立小铺接单的三位摄影师。微信扫店铺码，直接进店看作品、挑档期——你现在看到的就是他们的客户将看到的。</p>
+      <div class="shops">
+        <div class="shop-card">
+          <img class="sc-avatar" src="https://cdn.qiongren.online/dolee/intro/assets/avatar_xingyu.jpg" alt="星隅的店铺头像">
+          <div class="sc-name">星隅</div>
+          <div class="sc-meta">摄影师 · 南阳</div>
+          <div class="sc-line">汉服与旅拍主题，作品按专辑成册，88 单累计预约</div>
+          <div class="sc-qr">
+            <img src="https://cdn.qiongren.online/dolee/intro/assets/qr_xingyu.jpg" alt="星隅小铺微信小程序码，扫码进入摄影师星隅的小铺">
+            <span>微信扫码进店</span>
+          </div>
+        </div>
+        <div class="shop-card">
+          <img class="sc-avatar" src="https://cdn.qiongren.online/dolee/intro/assets/avatar_shiyue.jpg" alt="拾月的店铺头像">
+          <div class="sc-name">拾月</div>
+          <div class="sc-meta">个人摄影工作室</div>
+          <div class="sc-line">62 组主题作品，2292 次累计访客</div>
+          <div class="sc-qr">
+            <img src="https://cdn.qiongren.online/dolee/intro/assets/qr_shiyue.jpg" alt="拾月小铺微信小程序码，扫码进入拾月的小铺">
+            <span>微信扫码进店</span>
+          </div>
+        </div>
+        <div class="shop-card">
+          <img class="sc-avatar" src="https://cdn.qiongren.online/dolee/intro/assets/avatar_lili.jpg" alt="粒粒的作品封面">
+          <div class="sc-name">粒粒</div>
+          <div class="sc-meta">摄影师 · 临沂</div>
+          <div class="sc-line">cos 正片 / 妆造 / 陪拍，价目与档期都在小铺里</div>
+          <div class="sc-qr">
+            <img src="https://cdn.qiongren.online/dolee/intro/assets/qr_lili.jpg" alt="粒粒小铺微信小程序码，扫码进入摄影师粒粒的小铺">
+            <span>微信扫码进店</span>
+          </div>
+        </div>
+      </div>
+      <p class="shops-note">示例店铺与页面截图来自样板小铺掌柜：星隅、拾月、粒粒，感谢分享。</p>
+    </div>
+  </section>
+
+  <!-- who -->
+  <section id="who">
+    <div class="wrap">
+      <div class="sec-no">04</div>
+      <h2>给谁用</h2>
+      <p class="sec-lead">凡是「靠手艺接单、需要给客户看作品、按档期干活」的独立手艺人，都适合用它开门面。开店时职业可以自定义，不限于下面这些：</p>
+      <div class="who-list">
+        <span>摄影师</span><span>化妆师</span><span>模特</span><span>助理</span><span>纹身师</span><span>美甲师</span><span>私教</span><span>烘焙师</span><span>其他手艺人</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- start -->
+  <section id="start">
+    <div class="wrap">
+      <div class="sec-no">05</div>
+      <h2>三步开张，手机上 1 分钟</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="no">01</div>
+          <h3>选职业</h3>
+          <p>摄影师 / 化妆师 / 模特 / 助理 / 其它，职业会展示在小铺主页，客户靠它认识你。</p>
+        </div>
+        <div class="step">
+          <div class="no">02</div>
+          <h3>填门面</h3>
+          <p>头像、昵称、城市、简介，系统帮你填好默认值，改不改都行。</p>
+        </div>
+        <div class="step">
+          <div class="no">03</div>
+          <h3>传第一组作品</h3>
+          <p>从相册挑一组最好的传上去，你的小铺就开张了，客户立刻能看能约。</p>
+        </div>
+      </div>
+      <div class="start-note">
+        微信扫码进入小程序 → 点「开一家小铺」跟着向导走，1 分钟开张。作品随时上传，档期随时调整，不需要任何资质审核，也不用等。
+      </div>
+    </div>
+  </section>
+
+  <!-- price -->
+  <section id="price">
+    <div class="wrap">
+      <div class="sec-no">06</div>
+      <h2>价格：先免费用起来</h2>
+      <p class="sec-lead">作品集、档期预约、联系申请、海报生成，全部基础功能免费。作品超过 20 组、或需要客户管理和数据看板时，再考虑开通会员。</p>
+      <div class="plans">
+        <div class="plan">
+          <div class="name">免费版</div>
+          <div class="price">¥0</div>
+          <ul>
+            <li>作品 20 组，全部功能可用</li>
+            <li>档期预约日历 + 订阅消息提醒</li>
+            <li>联系方式掌柜决策制</li>
+            <li>海报生成器</li>
+            <li>作品专辑 3 个</li>
+            <li class="mute">到期作品不删除：会员过期后超出 20 组的部分自动隐藏，续费即恢复</li>
+          </ul>
+        </div>
+        <div class="plan vip">
+          <div class="name">会员</div>
+          <div class="price">¥6 <small>/ 月 · 或 ¥60 / 年</small></div>
+          <ul>
+            <li>作品不限量发布</li>
+            <li>作品专辑不限量</li>
+            <li>客户管理与联系方式查看</li>
+            <li>店铺数据看板（趋势 / 排行）</li>
+            <li>客户进店无广告打扰</li>
+            <li>主页会员标识</li>
+          </ul>
+        </div>
+      </div>
+      <p class="price-note">会员在 iOS 上走 App 内购，安卓走微信支付；续费在当前到期时间上顺延。数据说明：会员价格 2026-11-01 起从 ¥3/¥30 调整为 ¥6/¥60，早先开通的老会员不受影响。</p>
+    </div>
+  </section>
+
+  <!-- faq -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-no">07</div>
+      <h2>常见问题</h2>
+
+      <div class="faq-item">
+        <h3>摄影师作品集小程序哪个好？</h3>
+        <p>选作品集工具，建议看三点：一是作品展示形态是否够体面（版式能不能切换、能不能分类和建专辑）；二是有没有预约闭环（客户看完作品能不能直接挑你的档期，而不是跳出去加好友再约）；三是客户打开方不方便（微信小程序点开就看，不需要下载 App）。独立小铺在这三点上都是按独立摄影师、化妆师的使用习惯设计的，基础功能免费，可以先开一家试试再决定。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>有哪些免费的摄影师作品集小程序？</h3>
+        <p>独立小铺的基础功能免费：作品 20 组以内免费发布，含作品集排列、分类标签、专辑 3 个、档期预约日历、联系申请和海报生成，不强制开通会员。作品超过 20 组或需要客户管理、数据看板时，会员 ¥6/月或 ¥60/年。市面上同类工具各有免费额度，建议按自己的作品量和是否需要预约功能来挑。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>摄影师怎么管理拍摄档期？</h3>
+        <p>在独立小铺里，档期管理分三步：先在档期设置里定义你的服务项目（如「半日旅拍」「精修套餐」）和每天可接的单量；然后把日子标成可约或休息，系统自带农历和法定节假日调休；之后客户在你的主页月历上自己挑可约日期提交预约，你确认后自动进双方日程，微信订阅消息会提醒你新的预约和明日行程。撞档的前提是两份档期，独立小铺里只有一份日历，客户看到的和你能接的永远是同一份。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>怎么给客户展示摄影作品？</h3>
+        <p>三种方式：一是直接把小铺主页或单个作品分享给客户（微信里点开就看，带分类标签和价格角标）；二是把作品按主题打包成专辑，发专辑链接给客户（比如「婚纱样片」「旅拍客片」各一册）；三是用海报生成器把作品排成一张海报发朋友圈。客户看中的作品还能直接标收藏，方便回头对比。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>化妆师接单用什么工具比较好？</h3>
+        <p>化妆师的接单链路通常是：客户看案例 → 问档期 → 加微信谈细节 → 确认时间和地点。独立小铺把前三步收进一个小程序：作品集按妆造主题分类展示（婚礼跟妆、汉服造型、日常妆教等），档期日历让客户自己挑你有空的日子，联系方式由你决定何时公开。谈细节仍在微信里，工具只负责让客户更快找到你、更清楚你的档期。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>客户怎么预约我的拍摄时间？</h3>
+        <p>客户流程很简单：打开你的小铺主页 → 切到「档期预约」标签 → 月历上选一个绿色可约日期 → 选服务、填拍摄信息 → 提交预约。你会收到微信订阅消息提醒，确认后预约生效、自动进双方日程；客户改期或取消，你也会收到通知。整个预约不收费，最终价格和付款方式由你跟客户在微信里自行商定。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>独立小铺收费吗？怎么收费？</h3>
+        <p>基础功能永久免费，作品 20 组以内免费发布，包括作品集、档期预约、联系申请、海报生成。会员 ¥6/月、¥60/年，解锁作品和专辑不限量、客户管理与联系方式查看、店铺数据看板、无广告打扰和主页会员标识。会员过期后作品不删除，超出 20 组的部分自动隐藏，续费即恢复。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>独立摄影师有必要自己建一个网站吗？</h3>
+        <p>看获客方式。自己建网站的优势是完全自主的品牌门面，但需要买域名、维护服务器，而且摄影客户几乎都聚在微信里，网站反而多一道「打开浏览器」的门槛。如果你的客户主要来自朋友圈、老客转介绍和小红书等平台，微信小程序的转化路径更短：转发即达，看作品、约档期、加微信一气呵成。独立小铺相当于「不用建站的个人网站」，同样有独立品牌门面（店名+职业+城市），但长在微信里。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>作品放在小程序里，会不会丢？</h3>
+        <p>作品上传后存放在云端，不怕换手机、不怕清相册；作品打包导出功能可以把整组作品（含大图）打包下载备份，随时把原图拿回自己手里。会员过期作品也不会删除，只是超出免费额度的部分暂时隐藏。你的作品始终是你的资产。</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>独立小铺和接单平台有什么区别？</h3>
+        <p>接单平台（约拍平台、摄影平台）的模式是平台分发订单，你的客户关系沉淀在平台里；独立小铺的模式是你自己的店：客户直接进你的小铺，联系方式由你掌握，平台不做评价体系、不抽佣、不干预你和客户的沟通与定价。简单说，独立小铺不是给你派单的，是给你开门面的——流量仍来自你的小红书、朋友圈和口碑，小铺负责把来的人接住。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="site">
+    <div class="wrap">
+      <div class="foot-rule"></div>
+      <div class="links">
+        <a href="https://beian.miit.gov.cn/" rel="nofollow" target="_blank" rel="noopener">浙ICP备2023041446号-3</a>
+        <span class="sep">|</span>
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33012702000538" rel="nofollow" target="_blank" rel="noopener">浙公网安备 33012702000538号</a>
+      </div>
+      <div class="cp">独立小铺 · 摄影师化妆师的作品集与档期预约微信小程序 · © 2026 杭州微铺科技</div>
+    </div>
+  </footer>
+
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "独立小铺",
+  "alternateName": "Dolee",
+  "url": "https://dolee.cn/intro/",
+  "description": "独立小铺是给独立摄影师、化妆师等个人服务者使用的微信小程序：作品集排列、档期预约日历、联系方式掌柜决策制、分享海报生成，基础功能免费。",
+  "foundingDate": "2023",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "杭州微铺科技"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "独立小铺",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "微信小程序",
+  "url": "https://dolee.cn/intro/",
+  "description": "摄影师、化妆师的作品集与档期预约微信小程序。作品集 5 种排列版式、分类标签与专辑；档期月历客户自助预约；联系方式掌柜决策制；海报生成器。基础功能免费，会员 ¥6/月 或 ¥60/年。",
+  "offers": [
+    { "@type": "Offer", "name": "免费版", "price": "0", "priceCurrency": "CNY", "description": "作品 20 组、专辑 3 个，档期预约、联系申请、海报生成全部可用" },
+    { "@type": "Offer", "name": "会员月卡", "price": "6", "priceCurrency": "CNY", "description": "作品与专辑不限量、客户管理、数据看板、无广告、会员标识" },
+    { "@type": "Offer", "name": "会员年卡", "price": "60", "priceCurrency": "CNY", "description": "同月卡全部权益，年付" }
+  ],
+  "featureList": "作品集排列（5 种版式）, 档期预约日历（可约/约满/休息三态月历）, 联系方式掌柜决策制, 作品专辑与分类标签, 价格档位角标, 分享海报生成（作品/档期/名片）, 订阅消息提醒, 作品打包导出备份",
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "独立摄影师、化妆师、模特、纹身师、美甲师、私教、烘焙师等个人服务者"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "摄影师作品集小程序哪个好？",
+      "acceptedAnswer": { "@type": "Answer", "text": "选作品集工具建议看三点：作品展示形态是否够体面（版式切换、分类、专辑）；有没有预约闭环（客户看完作品能否直接挑档期）；客户打开方不方便（微信小程序点开就看）。独立小铺按独立摄影师、化妆师的习惯设计，作品集 5 种排列版式、分类标签、专辑、档期预约日历齐备，基础功能免费。" }
+    },
+    {
+      "@type": "Question",
+      "name": "有哪些免费的摄影师作品集小程序？",
+      "acceptedAnswer": { "@type": "Answer", "text": "独立小铺基础功能免费：作品 20 组以内免费发布，含作品集排列、分类标签、专辑 3 个、档期预约日历、联系申请和海报生成。作品超过 20 组或需要客户管理、数据看板时，会员 ¥6/月或 ¥60/年。" }
+    },
+    {
+      "@type": "Question",
+      "name": "摄影师怎么管理拍摄档期？",
+      "acceptedAnswer": { "@type": "Answer", "text": "在独立小铺里先定义服务项目和每天可接单量，再把日子标成可约或休息（自带农历和节假日调休）。客户在主页月历上挑可约日期提交预约，掌柜确认后自动进双方日程，微信订阅消息提醒新预约和明日行程。客户看到的可约状态与掌柜日历是同一份，不会撞档。" }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么给客户展示摄影作品？",
+      "acceptedAnswer": { "@type": "Answer", "text": "三种方式：把小铺主页或单个作品分享给客户（微信点开即看）；把作品按主题打包成专辑分享；用海报生成器把作品排成海报发朋友圈。客户还能收藏作品方便回头对比。" }
+    },
+    {
+      "@type": "Question",
+      "name": "化妆师接单用什么工具比较好？",
+      "acceptedAnswer": { "@type": "Answer", "text": "化妆师接单链路是看案例、问档期、加微信谈细节。独立小铺把前三步收进一个小程序：作品集按妆造主题分类，档期日历让客户自己挑有空的日子，联系方式由掌柜决定何时公开。谈细节仍在微信，工具负责让客户更快找到你。" }
+    },
+    {
+      "@type": "Question",
+      "name": "客户怎么预约我的拍摄时间？",
+      "acceptedAnswer": { "@type": "Answer", "text": "客户打开小铺主页，切到档期预约标签，在月历上选一个可约日期，选服务、填信息提交预约。掌柜收到微信订阅消息提醒，确认后预约生效并进双方日程。预约不收费，价格和付款由双方在微信里自行商定。" }
+    },
+    {
+      "@type": "Question",
+      "name": "独立小铺收费吗？怎么收费？",
+      "acceptedAnswer": { "@type": "Answer", "text": "基础功能永久免费：作品 20 组以内免费发布，包括作品集、档期预约、联系申请、海报生成。会员 ¥6/月、¥60/年，解锁作品和专辑不限量、客户管理与联系方式查看、店铺数据看板、无广告打扰和主页会员标识。会员过期作品不删除，超出部分隐藏，续费即恢复。" }
+    },
+    {
+      "@type": "Question",
+      "name": "独立摄影师有必要自己建一个网站吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "看获客方式。自建网站品牌自主，但摄影客户聚集在微信里，网站多一道打开浏览器的门槛。若客户主要来自朋友圈、转介绍和小红书，微信小程序转化路径更短：转发即达，看作品、约档期、加微信一气呵成。独立小铺相当于不用建站的个人网站，同样有独立品牌门面，但长在微信里。" }
+    },
+    {
+      "@type": "Question",
+      "name": "作品放在小程序里，会不会丢？",
+      "acceptedAnswer": { "@type": "Answer", "text": "作品上传后云端存放，不怕换手机、清相册；作品打包导出功能可把整组作品含大图打包下载备份。会员过期作品不删除，超出免费额度的部分暂时隐藏，续费即恢复。" }
+    },
+    {
+      "@type": "Question",
+      "name": "独立小铺和接单平台有什么区别？",
+      "acceptedAnswer": { "@type": "Answer", "text": "接单平台分发订单，客户关系沉淀在平台；独立小铺是你自己的店：客户直接进你的小铺，联系方式由你掌握，平台不做评价体系、不抽佣、不干预沟通与定价。独立小铺不派单，负责开门面，把你的小红书、朋友圈和口碑流量接住。" }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
