@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/intro/">
+<title>独立小铺更新日志：2026 年 10 月以来的真实发版记录 - 独立小铺</title>
+<meta name="description" content="独立小铺（摄影师·化妆师的作品集与档期预约微信小程序）更新日志：作品档位、客户收藏、预约时间轴、自定义预约字段、纯展示模式、一键开店向导、海报生成器等能力的逐条发版记录，2026 年 11 月起保持高频迭代。基础功能免费。">
+<meta name="baidu-site-verification" content="codeva-irflJlZeFr" />
+<meta name="baidu-site-verification" content="codeva-SX8bYJkuwM" />
+<meta name="msvalidate.01" content="E82DB29CC58197048041CEEF1268A600" />
+<meta name="sogou_site_verification" content="YC4y5Bygz6" />
+<meta name="bytedance-verification-code" content="j06SZm6KgNVeCYGxeBsI" />
+<meta name="shenma-site-verification" content="188399eaa774e3da961447bad6efda11_1795233997" />
+<meta property="og:title" content="独立小铺更新日志：2026 年 10 月以来的真实发版记录">
+<meta property="og:description" content="作品档位、客户收藏、预约时间轴、一键开店向导、海报生成器……独立小铺的逐条发版记录，11 月起保持高频迭代，基础功能免费。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://dolee.cn/intro/changelog.html">
+<meta property="og:image" content="https://cdn.qiongren.online/dolee/intro/assets/xingyu_albums.jpg">
+<link rel="canonical" href="https://dolee.cn/intro/changelog.html">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --sub: #999;
+    --weak: #bbb;
+    --line: #f0f0f0;
+    --green: #07C160;
+    --bg-soft: #f7f8fa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: var(--ink);
+    background: #fff;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+
+  /* header */
+  header.site {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand { font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+  nav.top { display: flex; gap: 28px; }
+  nav.top a { font-size: 14px; color: #666; }
+  nav.top a:hover { color: var(--ink); }
+  @media (max-width: 640px) { nav.top { display: none; } }
+
+  /* hero */
+  .hero { padding: 88px 0 72px; border-bottom: 1px solid var(--line); }
+  .hero .kicker { font-size: 14px; color: var(--sub); letter-spacing: 4px; margin-bottom: 20px; }
+  h1 { font-size: 34px; line-height: 1.45; font-weight: 700; max-width: 640px; }
+  h1 .thin { color: var(--sub); font-weight: 400; }
+  .hero .lead { margin-top: 22px; font-size: 17px; color: #444; max-width: 620px; }
+  .hero .facts { margin-top: 26px; display: flex; gap: 44px; flex-wrap: wrap; }
+  .hero .facts .num { font-family: Georgia, "Times New Roman", serif; font-size: 30px; font-weight: 700; }
+  .hero .facts .lbl { font-size: 13px; color: var(--sub); margin-top: 2px; }
+  .hero-flex { display: flex; gap: 48px; align-items: flex-start; justify-content: space-between; }
+  .hero-main { flex: 1 1 480px; }
+  .hero-qr { flex: 0 0 220px; text-align: center; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 12px; padding: 20px 16px 16px; }
+  .hero-qr img { width: 172px; height: 172px; display: block; margin: 0 auto; }
+  .hero-qr .cap { font-size: 13px; color: var(--sub); margin-top: 10px; line-height: 1.6; }
+  @media (max-width: 640px) { .hero-flex { flex-direction: column; } .hero-qr { width: 100%; } }
+
+  /* sections */
+  section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+  .sec-no { font-family: Georgia, serif; font-size: 15px; color: #d8d8d8; letter-spacing: 2px; }
+  h2 { font-size: 26px; font-weight: 700; margin: 8px 0 10px; }
+  .sec-lead { color: #555; max-width: 640px; }
+
+  /* version status */
+  .proof { margin-top: 44px; background: var(--bg-soft); border-radius: 14px; padding: 34px 32px; }
+  .proof h3 { font-size: 18px; margin-bottom: 6px; }
+  .proof .src { font-size: 12px; color: var(--weak); margin-bottom: 20px; }
+  .proof-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+  .proof .cell { flex: 1 1 140px; text-align: center; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px 8px 14px; }
+  .proof .cell .num { font-family: Georgia, serif; font-size: 28px; font-weight: 700; }
+  .proof .cell .lbl { font-size: 12px; color: var(--sub); margin-top: 4px; line-height: 1.5; }
+  .proof .sum { margin-top: 18px; font-size: 14px; color: #666; }
+
+  /* releases */
+  .rel { margin-top: 46px; }
+  .rel-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .rel-head .date { font-family: Georgia, serif; font-size: 14px; color: var(--weak); }
+  .badge { font-size: 12px; border-radius: 4px; padding: 1px 8px; align-self: center; }
+  .badge.ga { color: #fff; background: var(--green); }
+  .badge.beta { color: var(--sub); border: 1px solid var(--line); }
+  .rel h3 { font-size: 19px; font-weight: 700; margin-top: 10px; }
+  .rel ul { list-style: none; margin-top: 10px; max-width: 740px; }
+  .rel ul li { font-size: 15px; color: #555; padding-left: 18px; position: relative; margin-top: 7px; }
+  .rel ul li::before { content: ""; position: absolute; left: 0; top: 11px; width: 7px; height: 7px; border-radius: 50%; background: var(--green); opacity: .85; }
+
+  /* corner stones */
+  .stones { margin-top: 40px; }
+  .stones li { font-size: 15px; color: #555; padding-left: 18px; position: relative; margin-top: 10px; list-style: none; max-width: 740px; }
+  .stones li::before { content: ""; position: absolute; left: 0; top: 11px; width: 7px; height: 7px; border-radius: 50%; background: var(--green); opacity: .85; }
+  .stones li b { color: var(--ink); }
+
+  /* footer */
+  footer.site { padding: 48px 0 60px; }
+  footer.site .links { text-align: center; font-size: 13px; color: var(--sub); }
+  footer.site .links a { color: var(--sub); text-decoration: underline; text-underline-offset: 3px; }
+  footer.site .links .sep { margin: 0 10px; color: var(--weak); }
+  footer.site .cp { text-align: center; font-size: 12px; color: var(--weak); margin-top: 14px; }
+  .foot-rule { width: 88px; height: 1px; background: rgba(0,0,0,.12); margin: 0 auto 22px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top">独立小铺</a>
+    <nav class="top">
+      <a href="https://dolee.cn/intro/">产品介绍</a>
+      <a href="https://dolee.cn/intro/#faq">常见问题</a>
+      <a href="https://dolee.cn/intro/compare.html">选型对比</a>
+      <a href="https://dolee.cn/intro/cases.html">真实案例</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- hero -->
+  <div class="hero">
+    <div class="wrap hero-flex">
+      <div class="hero-main">
+        <div class="kicker">微信小程序 · 更新日志</div>
+        <h1>独立小铺<br><span class="thin">更新日志</span></h1>
+        <p class="lead">这里是独立小铺的真实发版记录，从 2026 年 10 月下旬起逐条整理，不挑选、不修饰。独立小铺是一款给独立摄影师、化妆师用的作品集与档期预约微信小程序，基础功能免费，会员 ¥6/月 或 ¥60/年——这些能力是怎么一点点长出来的，看这份日志就知道。</p>
+        <div class="facts">
+          <div><div class="num">3 年</div><div class="lbl">已服务独立创作者</div></div>
+          <div><div class="num">2000+</div><div class="lbl">摄影师 / 化妆师在用</div></div>
+          <div><div class="num">¥0</div><div class="lbl">基础功能永久免费</div></div>
+        </div>
+      </div>
+      <div class="hero-qr">
+        <img src="https://cdn.qiongren.online/dolee/intro/assets/qrcode.jpg" alt="独立小铺微信小程序码，微信扫码直接进入">
+        <div class="cap">微信扫码，直接进入小程序<br>也可以在微信「搜一搜」里搜「独立小铺」</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- current version -->
+  <section id="now">
+    <div class="wrap">
+      <div class="sec-no">00</div>
+      <h2>当前版本状态</h2>
+      <div class="proof">
+        <h3>版本速览（2026-11-21 更新本页时）</h3>
+        <div class="src">口径：正式版 = 微信全量用户已可用；体验版 = 已向内测用户开放，随下一次正式版全量发布。</div>
+        <div class="proof-grid">
+          <div class="cell"><div class="num">5.0.24</div><div class="lbl">当前正式版<br>2026-11-17 全量发布</div></div>
+          <div class="cell"><div class="num">5.0.42</div><div class="lbl">体验版迭代线<br>2026-11-20</div></div>
+          <div class="cell"><div class="num">20+</div><div class="lbl">11 月功能更新条目</div></div>
+        </div>
+        <div class="sum">进入 11 月后基本保持日更节奏：掌柜反馈的问题当天或次日修复上线，新能力先行体验版验证再全量。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2026-11 -->
+  <section id="nov">
+    <div class="wrap">
+      <div class="sec-no">01</div>
+      <h2>2026 年 11 月</h2>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-20</span><span class="badge beta">体验版 5.0.35–5.0.42</span></div>
+        <h3>预约撞档看得见，掌柜客户档案升级</h3>
+        <ul>
+          <li>客户预约页新增时间轴：当天哪些时段已被约、哪些预约还在等待掌柜确认，一目了然；提交撞档的预约前会收到提醒，是否提交仍由客户决定。</li>
+          <li>掌柜日程页同步显示占用时段与待审预约；收件箱里时段重叠的预约会打上「时段重叠」标签，避免误接。</li>
+          <li>客户档案升级：预约过你的服务、或收藏过你作品的客户，都能进入档案——档案里可以看到 TA 收藏了哪些作品、约了什么档位与档期。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-19 ~ 11-20</span><span class="badge beta">体验版 5.0.33–5.0.34</span></div>
+        <h3>预约信息自定义字段</h3>
+        <ul>
+          <li>掌柜可以自定义预约时需要顾客填写的信息，比如「小红书主页」「期望的拍摄风格」，最多 10 项，支持必填。</li>
+          <li>填写内容随预约单直达掌柜，在预约详情里可一键复制；未配置自定义字段的店铺完全不受影响，老预约单完全兼容。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-18</span><span class="badge beta">体验版 5.0.25</span></div>
+        <h3>纯展示模式</h3>
+        <ul>
+          <li>只想展示作品、暂不接档期预约的掌柜，可在设置里一键隐藏档期：预约与收藏入口同步收起，主页只留作品。</li>
+          <li>此前已隐藏档期的店铺自动获得新形态，无需任何迁移操作。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-17</span><span class="badge ga">正式版 5.0.24 全量发布</span></div>
+        <h3>V5.0 全量上线：作品档位 + 客户收藏</h3>
+        <ul>
+          <li>服务档位：把「拍什么、怎么收费」整理成清晰的档位（如「个人写真 ¥399 · 2 套造型 · 1 小时」），作品卡片与详情页直接带价格；免费版 5 个档位，会员不限量。</li>
+          <li>客户收藏：客户看到喜欢的作品点 ♥ 收藏；掌柜在店铺数据里能看到谁收藏了什么，接单心里有数。</li>
+          <li>「面议」全面退役为档位定价，存量服务分类自动迁移为档位，老店铺无感升级。</li>
+          <li>同版修复主页作品网格显示异常。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-14</span><span class="badge ga">正式版 4.8.30–4.8.40</span></div>
+        <h3>作品页双模式 + 新月历选择器</h3>
+        <ul>
+          <li>作品页支持「按分类 / 按专辑」一键切换；专辑模式改为画册式排版——左清单右详情，第一组作品即封面，专辑可一键转发给朋友。</li>
+          <li>选日期改为半屏月历：周末高亮、农历与节日标注、今天快捷跳转，口径与档期日历一致。</li>
+          <li>作品卡片备注展示位置统一，主页灰底占位与骨架屏动画，弱网下打开个人主页明显更快。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-13</span><span class="badge ga">正式版 4.8.25–4.8.27</span></div>
+        <h3>稳定性与支付体验</h3>
+        <ul>
+          <li>保存失败会明确弹窗提示原因，不再静默失败。</li>
+          <li>支付失败给出原因说明与防连点保护，常见失败场景在支付页有常驻引导。</li>
+          <li>修档期日历长列表的空态崩溃；个人主页缓存优先、打开提速。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-11</span><span class="badge ga">正式版 4.8.24</span></div>
+        <h3>图片上传更稳</h3>
+        <ul>
+          <li>大图上传超时自动重试一次；上传中显示进度条与总量预告（N 张 · 多大）。</li>
+          <li>部分图片失败不再拦整单——会说明原因，重按保存只补传剩余的。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-08 ~ 11-09</span><span class="badge ga">正式版 4.8.23</span></div>
+        <h3>作品管理页 + 吸底操作栏</h3>
+        <ul>
+          <li>作品管理页上线：长按拖拽排序，置顶 / 隐藏 / 编辑一条动作链，主页排列版式在这里换。</li>
+          <li>作品编辑页吸底操作栏：预览 / 保存 / 批量操作 / 拖拽删除统一收进底部，打字时保存按钮随键盘上移不再消失。</li>
+          <li>详情页 5 种作品版式（大图一排一 / 一排二 / 一排三 / 瀑布流 / 大图+瀑布流），主页与详情页可分别设置；排序口径前后端统一，置顶与隐藏不再乱位。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-07</span><span class="badge ga">正式版 4.8.x 系列</span></div>
+        <h3>一键开店向导 + 联系方式掌柜决策制</h3>
+        <ul>
+          <li>新手 3 步开店：选职业 → 确认门面 → 传第一组作品，每步即存，断了接着来。</li>
+          <li>联系方式改为掌柜决策制：微信号不再直接公开，客户发起申请、掌柜同意后定向可见，拒绝则对方无感知。</li>
+          <li>新增「关于TA」举报入口；首页升级——动态、分享、空态指路。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-11-01 ~ 11-02</span><span class="badge ga">正式版 4.7.28</span></div>
+        <h3>作品打包导出 + 全站性能优化</h3>
+        <ul>
+          <li>作品打包导出（功能实验室）：整组作品连原图打包下载备份，打包中带进度条，完成后站内信通知；每 7 天可打包一次。</li>
+          <li>全站接口瘦身与登录提速，弱网下明显更快。</li>
+          <li>档期海报定稿「可约 / 快满 / 约满」三档状态表达。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2026-10 -->
+  <section id="oct">
+    <div class="wrap">
+      <div class="sec-no">02</div>
+      <h2>2026 年 10 月</h2>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-10-27</span><span class="badge ga">正式版 4.7.7</span></div>
+        <h3>分享海报生成器</h3>
+        <ul>
+          <li>三种模板：作品海报、档期月历海报、个人名片海报，自动带店名、职业、城市与小程序码。</li>
+          <li>从作品页、档期页、个人主页都能一键生成，保存即分享。</li>
+        </ul>
+      </div>
+
+      <div class="rel">
+        <div class="rel-head"><span class="date">2026-10-23 ~ 10-24</span><span class="badge ga">正式版 4.7.3–4.7.6</span></div>
+        <h3>稳定性基建</h3>
+        <ul>
+          <li>前端异常与接口失败监控上线，问题不用等用户反馈才发现。</li>
+          <li>白屏检测与骨架屏：页面加载过程有反馈、有兜底。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- corner stones -->
+  <section id="stones">
+    <div class="wrap">
+      <div class="sec-no">03</div>
+      <h2>更早的核心能力（持续在线）</h2>
+      <p class="sec-lead">日志从 2026-10-23 起逐条记录；这些更早上线的基石能力一直可用，细节见<a href="https://dolee.cn/intro/" style="text-decoration:underline;text-underline-offset:3px;">产品介绍页</a>。</p>
+      <ul class="stones">
+        <li><b>作品专辑与画册：</b>按主题策展，专辑分享落地页内嵌档期预约，客户看完就能约。</li>
+        <li><b>作品多标签：</b>一组作品挂多个标签，客户按标签浏览分组。</li>
+        <li><b>档期日历与订阅提醒：</b>绿=可约、红=约满、灰=休息，自动带农历与法定节假日调休；新预约、改期、明日行程都有微信提醒。</li>
+        <li><b>个人主页获客改版：</b>画廊式作品页、名片式关于页、底部切换条，主页即门面。</li>
+        <li><b>会员与虚拟支付：</b>¥6/月 或 ¥60/年，微信内直接订阅；会员过期作品不删除，超出免费额度的部分隐藏，续费即恢复。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="site">
+    <div class="wrap">
+      <div class="foot-rule"></div>
+      <div class="links">
+        <a href="https://beian.miit.gov.cn/" rel="nofollow" target="_blank" rel="noopener">浙ICP备2023041446号-3</a>
+        <span class="sep">|</span>
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=33012702000538" rel="nofollow" target="_blank" rel="noopener">浙公网安备 33012702000538号</a>
+      </div>
+      <div class="cp">独立小铺 · 摄影师化妆师的作品集与档期预约微信小程序 · © 2026 杭州微铺科技</div>
+    </div>
+  </footer>
+
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "独立小铺",
+  "alternateName": "Dolee",
+  "url": "https://dolee.cn/intro/",
+  "description": "独立小铺是给独立摄影师、化妆师等个人服务者使用的微信小程序：作品集排列、档期预约日历、联系方式掌柜决策制、分享海报生成，基础功能免费。",
+  "foundingDate": "2023",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "杭州微铺科技"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "独立小铺更新日志：2026 年 10 月以来的真实发版记录",
+  "url": "https://dolee.cn/intro/changelog.html",
+  "description": "独立小铺的逐条发版记录：作品档位、客户收藏、预约时间轴、自定义预约字段、纯展示模式、一键开店向导、海报生成器等，2026 年 11 月起保持高频迭代。",
+  "datePublished": "2026-11-21",
+  "dateModified": "2026-11-21",
+  "inLanguage": "zh-CN",
+  "author": { "@type": "Organization", "name": "杭州微铺科技", "url": "https://dolee.cn/intro/" },
+  "publisher": { "@type": "Organization", "name": "杭州微铺科技", "url": "https://dolee.cn/intro/" },
+  "isPartOf": { "@type": "WebSite", "name": "独立小铺", "url": "https://dolee.cn/intro/" },
+  "articleSection": "更新日志",
+  "keywords": ["独立小铺更新日志", "摄影师作品集小程序", "档期预约小程序", "微信小程序作品集", "独立摄影师工具", "化妆师预约工具", "免费作品集小程序", "作品档位", "客户收藏"],
+  "about": { "@type": "SoftwareApplication", "name": "独立小铺", "operatingSystem": "微信小程序", "softwareVersion": "5.0.24", "applicationCategory": "BusinessApplication" }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "独立小铺",
+  "alternateName": "Dolee",
+  "url": "https://dolee.cn/intro/",
+  "operatingSystem": "微信小程序（微信内使用，无需下载 App）",
+  "applicationCategory": "BusinessApplication",
+  "description": "给独立摄影师、化妆师等个人服务者的作品集与档期预约微信小程序：作品集排列、档期预约日历、客户收藏、服务档位定价、分享海报生成。基础功能免费。",
+  "softwareVersion": "5.0.24",
+  "dateModified": "2026-11-21",
+  "releaseNotes": "2026-11-17 正式版 5.0.24 全量：作品档位（服务定价档位+作品卡价格角标）与客户收藏上线。体验版迭代至 5.0.42：预约时间轴与撞档提醒、预约信息自定义字段、纯展示模式、客户档案升级。近期还有：一键开店向导、联系方式掌柜决策制、作品管理页与 5 种排列版式、作品打包导出、分享海报生成器。完整记录见本页正文。",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CNY",
+    "description": "基础功能免费（作品 20 组、专辑 3 个）；会员 ¥6/月 或 ¥60/年 解锁不限量与更多权益"
+  },
+  "author": { "@type": "Organization", "name": "杭州微铺科技", "url": "https://dolee.cn/intro/" }
+}
+</script>
+
+</body>
+</html>
