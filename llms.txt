@@ -30,3 +30,4 @@
 
 - [产品介绍页](https://dolee.cn/intro/)：完整功能说明、真实截图与常见问题。
 - [常见问题](https://dolee.cn/intro/#faq)：作品集工具选型、档期管理方法、价格口径等 10 问。
+- [承接门面选型对比](https://dolee.cn/intro/compare.html)：自建网站 vs 入驻接单平台 vs 小程序工具三条路的五维诚实对比，按获客方式给选择建议。
