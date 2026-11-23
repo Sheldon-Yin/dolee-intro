@@ -51,6 +51,7 @@ s.parentNode.insertBefore(el, s);
   h1 { font-size: 30px; line-height: 1.45; font-weight: 700; max-width: 720px; }
   .lead { margin-top: 18px; color: #555; font-size: 16px; max-width: 720px; }
   .upt { margin-top: 12px; font-size: 13px; color: var(--weak); }
+  .upt a { color: var(--green); font-weight: 600; }
   .paths { padding: 18px 0 8px; }
   .path-card { border: 1px solid var(--line); border-radius: 14px; padding: 26px 28px; margin-top: 22px; background: #fff; }
   .path-card h2 { font-size: 19px; font-weight: 700; }
@@ -72,6 +73,16 @@ s.parentNode.insertBefore(el, s);
   footer.site .links { text-align: center; }
   footer.site .links .sep { margin: 0 10px; }
   @media (max-width: 640px) { h1 { font-size: 24px; } .hero { padding: 48px 0 32px; } nav.top { gap: 14px; } }
+  @page { size: A4; }
+  @media print {
+    .pdf-link { display: none; }
+    header.site { position: static; }
+    .hero { padding: 24px 0 28px; }
+    section.block { padding: 28px 0 6px; }
+    .path-card, .data-box, tr { break-inside: avoid; }
+    h2 { break-after: avoid; }
+    footer.site { margin-top: 24px; padding: 18px 0 20px; }
+  }
 </style>
 </head>
 <body>
@@ -97,7 +108,7 @@ s.parentNode.insertBefore(el, s);
       <div class="kicker">选型参考 · 只讲事实</div>
       <h1>独立摄影师的线上作品集，三条路怎么选</h1>
       <p class="lead">客户决定找你拍之前，几乎一定会看你的作品。承接这些作品的门面常见三种做法：自己建网站、入驻接单平台、用小程序工具开店。这篇按成本、技术门槛、客户触达、预约闭环、客户关系归属五个维度把三条路讲清楚，最后给一个按获客方式选的建议。本文由小程序工具「独立小铺」整理，涉及自身之处已如实标注短板。</p>
-      <p class="upt">本页内容更新于 2026-11-23 · 各工具功能与价格以官方页面实时为准</p>
+      <p class="upt">本页内容更新于 2026-11-23 · 各工具功能与价格以官方页面实时为准<span class="pdf-link"> · <a href="compare.pdf" type="application/pdf">本文 PDF 版</a></span><!-- compare.pdf 由本页打印生成（A4）：正文改动后须重新打印并上传，否则 PDF 会滞后于页面 --></p>
     </div>
   </div>
 
